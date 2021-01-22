@@ -182,30 +182,36 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">{{ _('Data last updated') }}</th>
-                <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.created) or _('unknown') }}</td>
+                <th scope="row">{{ _('Format') }}</th>
+                <td>{{ res.format or res.mimetype_inner or res.mimetype or _('unknown') }}</td>
               </tr>
+              <!-- Mock up placeholder -->
               <tr>
-                <th scope="row">{{ _('Metadata last updated') }}</th>
-                <td>{{ h.render_datetime(res.metadata_modified) or h.render_datetime(res.created) or _('unknown') }}</td>
+                <th scope="row">{{ _('Size') }}</th>
+                <!--<td>{{ res.size or res.mimetype_inner or res.mimetype or _('unknown') }}</td>-->
+                <td>{{ _("503.9 KiB") }}</td>
+              </tr>
+              <!-- Mock up placeholder -->
+              <tr>
+                <th scope="row">{{ _('Author') }}</th>
+                <!--<td>{{ res.author or res.mimetype_inner or res.mimetype or _('unknown') }}</td>-->
+                <td>{{ _("Juan Doe") }}</td>
+              </tr>
+              <!-- Mock up placeholder -->
+              <tr>
+                <th scope="row">{{ _('Author Email') }}</th>
+                <!--<td>{{ h.mail_to(email_address=res.author_email, name=res.author) or res.mimetype_inner or res.mimetype or _('unknown') }}</td>-->
+                <td>{{ _("Juan Doe") }}</td>
+              </tr>
+              <!-- Mock up placeholder -->
+              <tr>
+                <th scope="row">{{ _('Tiering') }}</th>
+                <td>{{ _("STB") }}</td>
               </tr>
               <tr>
                 <th scope="row">{{ _('Created') }}</th>
                 <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
               </tr>
-              <tr>
-                <th scope="row">{{ _('Format') }}</th>
-                <td>{{ res.format or res.mimetype_inner or res.mimetype or _('unknown') }}</td>
-              </tr>
-              <tr>
-                <th scope="row">{{ _('License') }}</th>
-                <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
-              </tr>
-              {% for key, value in h.format_resource_items(res.items()) %}
-                {% if key not in ('created', 'metadata modified', 'last modified', 'format') %}
-                  <tr class="toggle-more"><th scope="row">{{ key | capitalize }}</th><td>{{ value }}</td></tr>
-                {% endif %}
-              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -221,7 +227,5 @@
     {% snippet "package/snippets/resources.html", pkg=pkg, active=res.id, action='read', is_activity_archive=is_activity_archive %}
   {% endblock %}
 
-  {% block resource_license %}
-    {% snippet "snippets/social.html" %}
-  {% endblock %}
+
 {% endblock %}

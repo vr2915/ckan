@@ -44,9 +44,6 @@
           {% if not is_activity_archive and res.has_views %}
             <i class="fa fa-bar-chart-o"></i>
             {{ _('Preview') }}
-          {% else %}
-            <i class="fa fa-info-circle"></i>
-            {{ _('More information') }}
           {% endif %}
         </a>
       </li>
@@ -63,6 +60,7 @@
         </a>
       </li>
       {% endif %}
+      <!--
       {% if can_edit %}
       <li>
         <a href="{{ h.url_for(pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id) }}">
@@ -71,6 +69,7 @@
         </a>
       </li>
       {% endif %}
+      -->
       {% endblock %}
     </ul>
   </div>
