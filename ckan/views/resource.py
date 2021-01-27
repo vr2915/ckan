@@ -163,19 +163,30 @@ def download(package_type, id, resource_id, filename=None):
         u'auth_user_obj': g.userobj
     }
 
+    
     try:
         rsc = get_action(u'resource_show')(context, {u'id': resource_id})
         get_action(u'package_show')(context, {u'id': id})
     except (NotFound, NotAuthorized):
         return base.abort(404, _(u'Resource not found'))
 
+    upload = uploader.get_resource_uploader(rsc)
+    rsc[u'url'] = str(upload.download(rsc[u'id'])) #stanti    
+    
+    log.info("S3 URL %s", rsc[u'url'])
+
     if rsc.get(u'url_type') == u'upload':
-        upload = uploader.get_resource_uploader(rsc)
+
         filepath = upload.get_path(rsc[u'id'])
-        return flask.send_file(filepath)
+        try:
+            return flask.send_file(filepath) #stanti
+        except FileNotFoundError:
+            return h.redirect_to(rsc[u'url']) #stanti
+
     elif u'url' not in rsc:
         return base.abort(404, _(u'No download is available'))
     return h.redirect_to(rsc[u'url'])
+    
 
 
 class CreateView(MethodView):
